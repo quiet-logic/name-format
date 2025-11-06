@@ -1,6 +1,7 @@
 README.md
 pyproject.toml
 name_format/__init__.py
+name_format/cli.py
 name_format/core.py
 name_format.egg-info/PKG-INFO
 name_format.egg-info/SOURCES.txt

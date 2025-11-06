@@ -1,8 +1,10 @@
 import argparse
+
 try:
     from .core import full_name
 except Exception:
     from name_format.core import full_name  # type: ignore
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(
@@ -24,6 +26,7 @@ def main() -> None:
     if not args.name:
         parser.error("Provide either NAME tokens, or --first and --last.")
     print(full_name(" ".join(args.name)))
+
 
 if __name__ == "__main__":
     main()

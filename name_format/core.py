@@ -3,24 +3,41 @@ import re
 
 # Particles that usually stay lowercase when not the first token
 LOWER_PARTICLES = {
-    "de", "da", "del", "della", "der", "den",
-    "van", "von", "vom", "zu", "zur",
-    "di", "du", "des",
-    "la", "le",
-    "of", "the",
+    "de",
+    "da",
+    "del",
+    "della",
+    "der",
+    "den",
+    "van",
+    "von",
+    "vom",
+    "zu",
+    "zur",
+    "di",
+    "du",
+    "des",
+    "la",
+    "le",
+    "of",
+    "the",
 }
 
 INITIAL_RE = re.compile(r"^[A-Za-z]\.?$")
 
+
 def _is_initial(tok: str) -> bool:
     return bool(INITIAL_RE.match(tok))
+
 
 def _format_initial(tok: str) -> str:
     # "a" or "a." -> "A."
     return tok[0].upper() + "."
 
+
 def _smart_cap_core(word: str) -> str:
     """Title-case a token but preserve inner apostrophes/hyphens."""
+
     def cap_piece(p: str) -> str:
         return p[:1].upper() + p[1:].lower() if p else p
 
@@ -28,6 +45,7 @@ def _smart_cap_core(word: str) -> str:
     apos_parts = word.split("'")
     apos_parts = ["-".join(cap_piece(h) for h in p.split("-")) for p in apos_parts]
     return "'".join(apos_parts)
+
 
 def _smart_cap(word: str) -> str:
     """Mc/Mac + title-casing with inner punctuation preserved."""
@@ -42,9 +60,11 @@ def _smart_cap(word: str) -> str:
 
     return _smart_cap_core(w)
 
+
 def _normalise_quotes(s: str) -> str:
     # normalise curly quotes to straight apostrophes
     return s.replace("’", "'").replace("‘", "'")
+
 
 def _tokens_from_input(*parts: str) -> list[str]:
     # join all parts, normalise quotes, turn separator punct into spaces, split
@@ -53,6 +73,7 @@ def _tokens_from_input(*parts: str) -> list[str]:
     s = re.sub(r"[,\.;:/|]+", " ", s)
     tokens = s.split()
     return tokens
+
 
 def _format_token(tok: str, position: int) -> str:
     t = tok.strip()
@@ -68,6 +89,7 @@ def _format_token(tok: str, position: int) -> str:
 
     return _smart_cap(t)
 
+
 def _normalise_attached_irish_o(tok: str) -> str:
     """Turn óxxxx / oxxxx (no apostrophe) into O'Xxxx."""
     if not tok:
@@ -81,6 +103,7 @@ def _normalise_attached_irish_o(tok: str) -> str:
     if t[0] in {"o", "ó"} and len(tok) > 1 and t[1:].isalpha():
         return "O'" + _smart_cap_core(tok[1:])
     return _smart_cap(tok)
+
 
 def full_name(*name_parts: str) -> str:
     """
@@ -120,7 +143,11 @@ def full_name(*name_parts: str) -> str:
 
     # Determine last name; keep preceding particle if present (e.g., "de Valera")
     if len(tokens) >= 3 and tokens[-2].lower() in LOWER_PARTICLES:
-        last = _format_token(tokens[-2], position=len(tokens) - 2) + " " + _smart_cap(tokens[-1])
+        last = (
+            _format_token(tokens[-2], position=len(tokens) - 2)
+            + " "
+            + _smart_cap(tokens[-1])
+        )
     else:
         # also normalise attached Ó/ O cases on last token
         last = _normalise_attached_irish_o(tokens[-1])
