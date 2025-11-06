@@ -1,16 +1,11 @@
 # name-format
 
-Robust personal-name formatter in Python.
+Robust personal-name formatter (library + CLI).
+- Handles Irish O’/Ó, Mc/Mac
+- Keeps initials
+- Preserves hyphens/apostrophes
+- Particles like “de/van/von”
 
-Supports:
-- Irish O'/Ó prefixes
-- Mc/Mac rules
-- Initials (A. B. etc)
-- Hyphens and apostrophes
-- Particles like `de`, `van`, `von` (when not first)
-
-```python
-from name_format import full_name
-
-print(full_name("ó brien"))       # O'Brien
-print(full_name("michael patrick o'sullivan"))  # Michael O'Sullivan
+## Install (dev)
+```bash
+python3 -m pip install -e . --no-build-isolation
