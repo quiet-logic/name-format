@@ -1,0 +1,26 @@
+Metadata-Version: 2.4
+Name: name-format
+Version: 0.1.0
+Summary: Robust personal-name formatter (Irish O’/Ó, Mc/Mac, initials, particles)
+Author: Steve Nolan
+License: MIT
+Project-URL: Homepage, https://github.com/quiet-logic/calm-log
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+
+# name-format
+
+Robust personal-name formatter in Python.
+
+Supports:
+- Irish O'/Ó prefixes
+- Mc/Mac rules
+- Initials (A. B. etc)
+- Hyphens and apostrophes
+- Particles like `de`, `van`, `von` (when not first)
+
+```python
+from name_format import full_name
+
+print(full_name("ó brien"))       # O'Brien
+print(full_name("michael patrick o'sullivan"))  # Michael O'Sullivan

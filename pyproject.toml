@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "name-format"
+version = "0.1.0"
+description = "Robust personal-name formatter (Irish O’/Ó, Mc/Mac, initials, particles)"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Steve Nolan" }]
+license = { text = "MIT" }
+dependencies = []
+
+[project.scripts]
+namefmt = "name_format.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/quiet-logic/calm-log"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["name_format*"]
